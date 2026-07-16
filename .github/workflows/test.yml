@@ -1,0 +1,83 @@
+name: CI Tests
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  test-backend:
+    name: Backend Jest Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout tests repository
+        uses: actions/checkout@v3
+        with:
+          path: qa-assignment
+
+      - name: Checkout source code
+        uses: actions/checkout@v3
+        with:
+          repository: AtharvaKulkarniIT/mern-todo-app
+          path: mern-todo-app
+          
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          
+      - name: Install test dependencies
+        working-directory: qa-assignment
+        run: npm install
+        
+      - name: Install backend dependencies
+        working-directory: mern-todo-app/TODO/todo_backend
+        run: npm install
+        
+      - name: Run Jest tests with coverage
+        working-directory: qa-assignment
+        run: npm run test
+
+  test-frontend:
+    name: Frontend Cypress Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout tests repository
+        uses: actions/checkout@v3
+        with:
+          path: qa-assignment
+
+      - name: Checkout source code
+        uses: actions/checkout@v3
+        with:
+          repository: AtharvaKulkarniIT/mern-todo-app
+          path: mern-todo-app
+          
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          
+      - name: Install test dependencies
+        working-directory: qa-assignment
+        run: npm install
+        
+      - name: Install frontend dependencies
+        working-directory: mern-todo-app/TODO/todo_frontend
+        run: npm install
+        
+      - name: Start backend server (Background)
+        working-directory: mern-todo-app/TODO/todo_backend
+        run: npm install && node server.js &
+        
+      - name: Start frontend server (Background)
+        working-directory: mern-todo-app/TODO/todo_frontend
+        run: npm start &
+        
+      - name: Wait for servers to be ready
+        run: npx wait-on http://localhost:5000/get http://localhost:3000
+        
+      - name: Run Cypress tests
+        working-directory: qa-assignment
+        run: npm run cypress:run

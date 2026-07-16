@@ -1,0 +1,12 @@
+[
+  {
+    "_id": "1",
+    "task": "Test task from fixture",
+    "done": false
+  },
+  {
+    "_id": "2",
+    "task": "Completed task from fixture",
+    "done": true
+  }
+]
