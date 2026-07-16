@@ -13,5 +13,11 @@
     "jest": "^29.0.0",
     "mongoose": "^7.0.0",
     "supertest": "^6.3.3"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "../mern-todo-app/TODO/todo_backend/**/*.js",
+      "tests/utils.js"
+    ]
   }
 }
