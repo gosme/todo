@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "QA Assignment tests",
   "scripts": {
-    "test": "jest --coverage",
+    "test": "cd .. && node qa-assignment/node_modules/jest/bin/jest.js --config qa-assignment/package.json --coverage",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run"
   },
