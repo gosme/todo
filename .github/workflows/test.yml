@@ -35,15 +35,21 @@ jobs:
         working-directory: mern-todo-app/TODO/todo_backend
         run: npm install
         
+      - name: Hide backend package.json for Jest coverage
+        run: mv mern-todo-app/TODO/todo_backend/package.json mern-todo-app/TODO/todo_backend/package.json.bak
+
       - name: Run Jest tests with coverage
         working-directory: qa-assignment
         run: npm run test
+
+      - name: Restore backend package.json
+        run: mv mern-todo-app/TODO/todo_backend/package.json.bak mern-todo-app/TODO/todo_backend/package.json
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
         with:
           name: jest-coverage-report
-          path: qa-assignment/coverage/
+          path: coverage/
 
   test-frontend:
     name: Frontend Cypress Tests
