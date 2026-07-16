@@ -25,16 +25,16 @@ describe('MERN Todo App E2E Tests', () => {
       body: { _id: 'new_id', task: newTask, done: false }
     }).as('addTask');
 
-    cy.get('input[placeholder="Enter a task"]').type(newTask);
-    cy.contains('button', 'ADD').click();
-    
-    cy.wait('@addTask').its('request.body').should('deep.equal', { task: newTask });
-    
-    // Since the app calls window.location.reload() on add, we need to mock the subsequent GET
+    // Define all intercepts BEFORE the actions that trigger them to avoid race conditions
     cy.intercept('GET', 'http://localhost:5000/get', [
       { _id: '1', task: 'Existing task', done: false },
       { _id: 'new_id', task: newTask, done: false }
     ]).as('getTodosAfterAdd');
+
+    cy.get('input[placeholder="Enter a task"]').type(newTask);
+    cy.contains('button', 'ADD').click();
+    
+    cy.wait('@addTask').its('request.body').should('deep.equal', { task: newTask });
     
     cy.wait('@getTodosAfterAdd');
     cy.contains(newTask).should('be.visible');
