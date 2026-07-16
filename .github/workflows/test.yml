@@ -39,6 +39,12 @@ jobs:
         working-directory: qa-assignment
         run: npm run test
 
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: jest-coverage-report
+          path: qa-assignment/coverage/
+
   test-frontend:
     name: Frontend Cypress Tests
     runs-on: ubuntu-latest
