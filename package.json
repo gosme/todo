@@ -15,9 +15,13 @@
     "supertest": "^6.3.3"
   },
   "jest": {
+    "rootDir": "..",
+    "testMatch": [
+      "<rootDir>/qa-assignment/tests/**/*.test.js"
+    ],
     "collectCoverageFrom": [
-      "../mern-todo-app/TODO/todo_backend/**/*.js",
-      "tests/utils.js"
+      "<rootDir>/mern-todo-app/TODO/todo_backend/**/*.js",
+      "<rootDir>/qa-assignment/tests/utils.js"
     ]
   }
 }
