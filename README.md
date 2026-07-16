@@ -14,19 +14,30 @@ This file contains the instructions for the Jest unit/integration tests and Cypr
 
 ## Setup Instructions
 
-1. **Install Root Dependencies (for Testing)**:
-   This will install Jest, Supertest, and Cypress at the root level.
+Since these tests are housed in a separate repository to keep the application source code pristine, you must first clone the target application into a sibling directory.
+
+1. **Clone the Target Application**:
+   Ensure you are in the parent directory of this test repository (e.g., `repos/todo/`), then run:
    ```bash
+   git clone https://github.com/AtharvaKulkarniIT/mern-todo-app.git
+   ```
+   *Note: This will create a `mern-todo-app` folder right next to your `qa-assignment` folder. The tests rely on this exact sibling directory structure!*
+
+2. **Install Test Dependencies**:
+   Navigate into this testing repository and install Jest, Supertest, and Cypress.
+   ```bash
+   cd qa-assignment  # (or your cloned test repo name)
    npm install
    ```
 
-2. **Install Application Dependencies**:
+3. **Install Application Dependencies**:
+   Install the dependencies for both the frontend and backend of the application you just cloned:
    ```bash
-   cd TODO/todo_backend
+   cd ../mern-todo-app/TODO/todo_backend
    npm install
    cd ../todo_frontend
    npm install
-   cd ../..
+   cd ../../../qa-assignment
    ```
 
 ## Running the Tests
